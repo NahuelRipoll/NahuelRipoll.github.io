@@ -634,11 +634,13 @@
       .skills-grid { grid-template-columns: 1fr; gap: 48px; }
       .projects-grid { grid-template-columns: 1fr; }
       .contact-email {
-        max-width: 100%;
-        font-size: clamp(24px, 7vw, 34px);
+        display: block;
+        width: 100%;
+        max-width: none;
+        font-size: clamp(20px, 5.8vw, 28px);
         line-height: 1.15;
-        overflow-wrap: anywhere;
         text-align: center;
+        overflow-wrap: normal;
       }
       footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
       .hero-scroll { left: 24px; }
