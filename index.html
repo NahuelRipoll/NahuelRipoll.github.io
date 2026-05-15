@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nahuel Ripoll — Data Analyst & Fullstack Developer</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Syne:wght@400;500;600;700;800&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #050a12;
+      --surface: #0c1524;
+      --card: rgba(255,255,255,0.03);
+      --card-hover: rgba(255,255,255,0.055);
+      --accent: #e2ff5d;
+      --accent-dim: rgba(226,255,93,0.08);
+      --accent-mid: rgba(226,255,93,0.2);
+      --text: #f0ede8;
+      --text-muted: #3d4f63;
+      --text-mid: #7a8fa6;
+      --border: rgba(255,255,255,0.06);
+      --border-accent: rgba(226,255,93,0.25);
+      --serif: 'Fraunces', serif;
+      --sans: 'Syne', sans-serif;
+      --mono: 'IBM Plex Mono', monospace;
+      --radius: 4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+
+/* ── GRAIN OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      background: rgba(5,10,18,0);
+      border-bottom: 1px solid transparent;
+      transition: background 0.4s, border-color 0.4s;
+    }
+    nav.scrolled {
+      background: rgba(5,10,18,0.9);
+      border-color: var(--border);
+      backdrop-filter: blur(16px);
+    }
+    .nav-logo {
+      font-family: var(--mono);
+      font-size: 13px;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--text-mid); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      border: none;
+      padding: 10px 20px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* ── HERO ── */
+    #hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 48px;
+      overflow: hidden;
+    }
+    #hero-canvas {
+      position: absolute;
+      inset: 0;
+      opacity: 0.35;
+    }
+    .hero-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.3s forwards;
+    }
+    .hero-label::before {
+      content: '▸ ';
+      opacity: 0.6;
+    }
+    .hero-name {
+      font-family: var(--serif);
+      font-weight: 800;
+      font-size: clamp(72px, 11vw, 168px);
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.5s forwards;
+    }
+    .hero-name em {
+      font-style: italic;
+      color: var(--accent);
+      font-optical-sizing: auto;
+    }
+    .hero-subtitle {
+      margin-top: 36px;
+      font-family: var(--mono);
+      font-size: 14px;
+      color: var(--text-mid);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+      max-width: 480px;
+      opacity: 0;
+      animation: fadeUp 0.9s 0.75s forwards;
+    }
+    .hero-subtitle .typed { color: var(--text); }
+    .hero-subtitle .cursor-blink {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--accent);
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 0.9s infinite;
+    }
+    .hero-actions {
+      margin-top: 48px;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.9s 1s forwards;
+    }
+    .btn-primary {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 14px 28px;
+      text-decoration: none;
+      display: inline-block;
+      transition: opacity 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.85; }
+    .btn-secondary {
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text-muted);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .btn-secondary:hover { color: var(--text); border-color: var(--text-mid); }
+    .hero-scroll {
+      position: absolute;
+      bottom: 36px;
+      left: 48px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      animation: fadeUp 0.9s 1.3s forwards;
+    }
+    .hero-scroll span {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+    .scroll-line {
+      width: 48px;
+      height: 1px;
+      background: var(--text-muted);
+      position: relative;
+      overflow: hidden;
+    }
+    .scroll-line::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent);
+      animation: scrollSlide 1.8s 1.5s infinite;
+    }
+
+    /* ── TICKER ── */
+    .ticker {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 12px 0;
+      overflow: hidden;
+      background: rgba(226,255,93,0.02);
+    }
+    .ticker-track {
+      display: flex;
+      gap: 0;
+      animation: ticker 28s linear infinite;
+      width: max-content;
+    }
+    .ticker-item {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      padding: 0 32px;
+      white-space: nowrap;
+      transition: color 0.2s;
+    }
+    .ticker-item .sep {
+      color: var(--accent);
+      margin-left: 32px;
+      opacity: 0.4;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 120px 48px; }
+    .section-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 48px;
+      height: 1px;
+      background: var(--accent);
+      opacity: 0.4;
+    }
+    .section-title {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .section-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── ABOUT ── */
+    #about {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+    .about-text p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-mid);
+      margin-bottom: 20px;
+    }
+    .about-text p strong { color: var(--text); }
+    .about-text p em { color: var(--accent); font-style: normal; }
+    .about-right { display: flex; flex-direction: column; gap: 24px; }
+    .stat-card {
+      border: 1px solid var(--border);
+      padding: 28px 32px;
+      background: var(--card);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s, border-color 0.3s;
+    }
+    .stat-card:hover {
+      background: var(--card-hover);
+      border-color: var(--border-accent);
+    }
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .stat-card:hover::before { opacity: 1; }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 56px;
+      font-weight: 800;
+      line-height: 1;
+      color: var(--accent);
+      letter-spacing: -0.04em;
+    }
+    .stat-label {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* ── SKILLS ── */
+    #skills { background: var(--surface); }
+    .skills-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      margin-top: 64px;
+    }
+    .skill-group-title {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      margin-bottom: 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-item { margin-bottom: 28px; }
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .skill-name {
+      font-family: var(--sans);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .skill-pct {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--accent);
+    }
+    .skill-bar {
+      height: 2px;
+      background: var(--border);
+      position: relative;
+      overflow: visible;
+    }
+    .skill-bar-fill {
+      height: 100%;
+      background: var(--accent);
+      width: 0;
+      transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+    }
+    .skill-bar-fill::after {
+      content: '';
+      position: absolute;
+      right: -1px;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--accent);
+    }
+    .skill-bar.animated .skill-bar-fill { width: var(--target-width); }
+
+    /* ── PROJECTS ── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      margin-top: 64px;
+      background: var(--border);
+    }
+    .project-card {
+      background: var(--bg);
+      padding: 40px 40px 76px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+    .project-card:hover { background: var(--surface); }
+    .project-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: var(--accent-dim);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .project-card:hover::after { opacity: 1; }
+    .project-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: inline-block;
+      border: 1px solid var(--border-accent);
+      padding: 4px 10px;
+    }
+    .project-num {
+      position: absolute;
+      top: 40px;
+      right: 40px;
+      font-family: var(--serif);
+      font-size: 80px;
+      font-weight: 800;
+      color: rgba(255,255,255,0.03);
+      line-height: 1;
+      transition: color 0.3s;
+    }
+    .project-card:hover .project-num { color: rgba(226,255,93,0.06); }
+    .project-title {
+      font-family: var(--serif);
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+    .project-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-mid);
+      margin-bottom: 28px;
+    }
+    .project-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .stack-tag {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.04);
+      padding: 4px 10px;
+      border-radius: 2px;
+    }
+    .project-link {
+      position: absolute;
+      bottom: 40px;
+      right: 40px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+      z-index: 1;
+    }
+    .project-link:hover { color: var(--accent); }
+    .project-link::after { content: '→'; }
+
+    /* ── CONTACT ── */
+    #contact {
+      text-align: center;
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+    }
+    .contact-intro {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--text-mid);
+      margin: 24px 0 48px;
+      letter-spacing: 0.04em;
+    }
+    .contact-email {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 72px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      text-decoration: none;
+      display: inline-block;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .contact-email::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .contact-email:hover { color: var(--accent); }
+    .contact-email:hover::after { width: 100%; }
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 56px;
+    }
+    .social-link {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .social-link:hover { color: var(--accent); }
+    .social-link::before { content: '↗'; font-size: 13px; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid var(--border);
+    }
+    footer p {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+    }
+    footer p span { color: var(--accent); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 50% { opacity: 1; }
+      51%, 100% { opacity: 0; }
+    }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    @keyframes scrollSlide {
+      from { transform: translateX(-100%); }
+      to   { transform: translateX(100%); }
+    }
+
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      #hero { padding: 0 24px; }
+      section { padding: 80px 24px; }
+      #about { grid-template-columns: 1fr; gap: 48px; }
+      .skills-grid { grid-template-columns: 1fr; gap: 48px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
+      .hero-scroll { left: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="navbar">
+    <a class="nav-logo" href="#">NR<span>.dev</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">Sobre mí</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Proyectos</a></li>
+      <li><a href="#contact">Contacto</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Contactarme</a>
+  </nav>
+
+  <!-- HERO -->
+  <section id="hero">
+    <canvas id="hero-canvas"></canvas>
+    <div class="hero-label">Data Analyst &amp; Fullstack Developer — Mendoza, Argentina</div>
+    <h1 class="hero-name">
+      Nahuel<br><em>Ripoll.</em>
+    </h1>
+    <p class="hero-subtitle">
+      Transformo datos en decisiones.<br>
+      <span id="typed-line"><span class="typed"></span><span class="cursor-blink"></span></span>
+    </p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#projects">Ver proyectos</a>
+      <a class="btn-secondary" href="#contact">Hablemos</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker">
+    <div class="ticker-track" id="tickerTrack">
+      <!-- JS will populate -->
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="about-text">
+      <div class="section-label reveal">01 — Sobre mí</div>
+      <h2 class="section-title reveal reveal-d1">Del código<br>a los <em>datos.</em></h2>
+      <p class="reveal reveal-d2">
+        Soy <strong>Nahuel Ripoll</strong>, desarrollador fullstack con base en Mendoza, Argentina, enfocado en análisis de datos, BI y productos digitales. Combino ingeniería de software con criterio analítico para convertir información en herramientas útiles.
+      </p>
+      <p class="reveal reveal-d3">
+        Trabajo con <em>Python</em>, <em>SQL</em>, <em>Power BI</em>, <em>FastAPI</em>, <em>React</em> y <em>Next.js</em> para construir dashboards, APIs, modelos predictivos y aplicaciones completas orientadas a negocio.
+      </p>
+      <p class="reveal reveal-d4">
+        Busco oportunidades donde pueda aportar desde ambos lados: entender los datos, encontrar patrones y llevar esos hallazgos a interfaces, reportes o sistemas que se puedan usar todos los días.
+      </p>
+    </div>
+    <div class="about-right">
+      <div class="stat-card reveal reveal-d1">
+        <div class="stat-number" data-count="3">0</div>
+        <div class="stat-label">Años construyendo software</div>
+      </div>
+      <div class="stat-card reveal reveal-d2">
+        <div class="stat-number" data-count="8">0</div>
+        <div class="stat-label">Proyectos data/fullstack publicados</div>
+      </div>
+      <div class="stat-card reveal reveal-d3">
+        <div class="stat-number" data-count="5">0</div>
+        <div class="stat-label">Tecnologías clave en mi stack</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-label reveal">02 — Skills</div>
+    <h2 class="section-title reveal reveal-d1">Stack<br><em>técnico.</em></h2>
+    <div class="skills-grid">
+      <div class="reveal reveal-d2">
+        <div class="skill-group-title">// Data analytics &amp; ML</div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Python</span>
+            <span class="skill-pct">88%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 88%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">SQL</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 80%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Pandas / NumPy</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Power BI / DAX</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 85%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal reveal-d3">
+        <div class="skill-group-title">// Fullstack &amp; producto</div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">React / TypeScript</span>
+            <span class="skill-pct">85%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 85%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">FastAPI / REST APIs</span>
+            <span class="skill-pct">82%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 82%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">Next.js / Supabase</span>
+            <span class="skill-pct">80%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 80%"></div>
+          </div>
+        </div>
+        <div class="skill-item">
+          <div class="skill-header">
+            <span class="skill-name">HTML / CSS / JavaScript</span>
+            <span class="skill-pct">92%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-bar-fill" style="--target-width: 92%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-label reveal">03 — Proyectos</div>
+    <h2 class="section-title reveal reveal-d1">Trabajo<br><em>selecto.</em></h2>
+
+    <div class="projects-grid">
+      <!-- P1 -->
+      <div class="project-card reveal reveal-d1">
+        <div class="project-num">01</div>
+        <span class="project-tag">Fullstack · Data · Deportes</span>
+        <h3 class="project-title">F1 Analytics<br>Dashboard</h3>
+        <p class="project-desc">
+          Dashboard fullstack de Fórmula 1 con datos históricos 2015-2025, standings, calendario, detalle de carrera, pitstops y predicción de posiciones con modelos de Machine Learning.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">FastAPI</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">SQLite</span>
+          <span class="stack-tag">scikit-learn</span>
+        </div>
+        <a href="https://github.com/NahuelRipoll/f1-analytics-dashboard" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+
+      <!-- P2 -->
+      <div class="project-card reveal reveal-d2">
+        <div class="project-num">02</div>
+        <span class="project-tag">Fullstack · Finanzas</span>
+        <h3 class="project-title">Monitor de<br>Cotizaciones</h3>
+        <p class="project-desc">
+          Dashboard en tiempo real para dólar, criptomonedas y acciones argentinas. Incluye historial, gráficos interactivos, alertas por umbral, cache TTL y actualización automática.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">FastAPI</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Recharts</span>
+          <span class="stack-tag">SQLite</span>
+        </div>
+        <a href="https://github.com/NahuelRipoll/Monitor-de-cotizaciones-financieras" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+
+      <!-- P3 -->
+      <div class="project-card reveal reveal-d3">
+        <div class="project-num">03</div>
+        <span class="project-tag">Machine Learning · API</span>
+        <h3 class="project-title">Telco Churn<br>Prediction</h3>
+        <p class="project-desc">
+          Proyecto end-to-end para predecir abandono de clientes. Incluye EDA, preprocessing, SMOTE, comparación de modelos, XGBoost final, CLI batch y API FastAPI de inferencia.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">XGBoost</span>
+          <span class="stack-tag">scikit-learn</span>
+          <span class="stack-tag">FastAPI</span>
+          <span class="stack-tag">Pandas</span>
+        </div>
+        <a href="https://github.com/NahuelRipoll/telco-churn-prediction" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+
+      <!-- P4 -->
+      <div class="project-card reveal reveal-d4">
+        <div class="project-num">04</div>
+        <span class="project-tag">EDA · Retail</span>
+        <h3 class="project-title">Superstore<br>Sales EDA</h3>
+        <p class="project-desc">
+          Análisis exploratorio de ventas retail con foco en rentabilidad, descuentos, regiones y categorías. Identifica pérdidas por descuentos altos y oportunidades por segmento.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Python</span>
+          <span class="stack-tag">Pandas</span>
+          <span class="stack-tag">Matplotlib</span>
+          <span class="stack-tag">Seaborn</span>
+          <span class="stack-tag">Jupyter</span>
+        </div>
+        <a href="https://github.com/NahuelRipoll/superstore-sales-eda" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+
+      <!-- P5 -->
+      <div class="project-card reveal reveal-d1">
+        <div class="project-num">05</div>
+        <span class="project-tag">Fullstack · Catálogo</span>
+        <h3 class="project-title">Bulonera<br>Agroindustrial</h3>
+        <p class="project-desc">
+          Catálogo virtual para empresa agroindustrial con búsqueda, rubros, formulario de contacto, panel admin protegido, gestión de productos y carga de imágenes en Supabase Storage.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Next.js</span>
+          <span class="stack-tag">React</span>
+          <span class="stack-tag">TypeScript</span>
+          <span class="stack-tag">Supabase</span>
+          <span class="stack-tag">Resend</span>
+        </div>
+        <a href="https://github.com/NahuelRipoll/Bulonera-Agroindustrial" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+
+      <!-- P6 -->
+      <div class="project-card reveal reveal-d2">
+        <div class="project-num">06</div>
+        <span class="project-tag">Mobile · Gestión</span>
+        <h3 class="project-title">Servicios<br>App</h3>
+        <p class="project-desc">
+          Aplicación mobile para gestión de pagos de servicios, construida con Expo Router, almacenamiento local, notificaciones y UI responsive con NativeWind.
+        </p>
+        <div class="project-stack">
+          <span class="stack-tag">Expo</span>
+          <span class="stack-tag">React Native</span>
+          <span class="stack-tag">SQLite</span>
+          <span class="stack-tag">NativeWind</span>
+          <span class="stack-tag">Notifications</span>
+        </div>
+        <a href="https://github.com/Nripoll02/BackUp-Proyectos" class="project-link" target="_blank" rel="noopener noreferrer">Ver proyecto</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-label reveal" style="justify-content: center;">04 — Contacto</div>
+    <h2 class="section-title reveal reveal-d1" style="justify-content: center;">¿Trabajamos<br><em>juntos?</em></h2>
+    <p class="contact-intro reveal reveal-d2">Abierto a oportunidades de Data Analyst, Fullstack Developer, proyectos freelance y colaboraciones.</p>
+    <a class="contact-email reveal reveal-d3" href="mailto:nahuelripoll33@gmail.com">nahuelripoll33@gmail.com</a>
+    <div class="social-links reveal reveal-d4">
+      <a class="social-link" href="https://www.linkedin.com/in/nahuel-ripoll/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+      <a class="social-link" href="https://github.com/NahuelRipoll" target="_blank" rel="noopener noreferrer">GitHub</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 <span>Nahuel Ripoll</span></p>
+    <p>Diseñado y desarrollado con <span>♥</span> en Mendoza</p>
+    <p>Data Analyst <span>/</span> Fullstack Dev</p>
+  </footer>
+
+  <script>
+    // ── NAVBAR SCROLL ──
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      navbar.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+    // ── HERO CANVAS ──
+    const canvas = document.getElementById('hero-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resizeCanvas() {
+      W = canvas.width  = canvas.offsetWidth;
+      H = canvas.height = canvas.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', () => { resizeCanvas(); initParticles(); });
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.r  = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random() * 0.5 + 0.1;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.x < 0 || this.x > W) this.vx *= -1;
+        if (this.y < 0 || this.y > H) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(226,255,93,${this.alpha})`;
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      const count = Math.floor((W * H) / 14000);
+      particles = Array.from({length: count}, () => new Particle());
+    }
+    initParticles();
+
+    // Draw animated chart lines in hero
+    let chartPoints = [];
+    function initChart() {
+      chartPoints = [];
+      const segs = 40;
+      for (let i = 0; i <= segs; i++) {
+        chartPoints.push({
+          x: (W / segs) * i,
+          y: H * 0.4 + (Math.random() - 0.5) * H * 0.35
+        });
+      }
+    }
+    initChart();
+    let chartOffset = 0;
+
+    function drawChart() {
+      chartOffset -= 0.5;
+      if (chartOffset < -W / 40) {
+        chartOffset = 0;
+        chartPoints.shift();
+        chartPoints.push({
+          x: W + W / 40,
+          y: H * 0.4 + (Math.random() - 0.5) * H * 0.35
+        });
+      }
+
+      // Redraw all points shifted
+      const shifted = chartPoints.map((p, i) => ({
+        x: p.x + chartOffset,
+        y: p.y
+      }));
+
+      ctx.beginPath();
+      ctx.moveTo(shifted[0].x, shifted[0].y);
+      for (let i = 1; i < shifted.length; i++) {
+        const mx = (shifted[i-1].x + shifted[i].x) / 2;
+        const my = (shifted[i-1].y + shifted[i].y) / 2;
+        ctx.quadraticCurveTo(shifted[i-1].x, shifted[i-1].y, mx, my);
+      }
+      ctx.strokeStyle = 'rgba(226,255,93,0.15)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Second chart line
+      ctx.beginPath();
+      ctx.moveTo(shifted[0].x, shifted[0].y + 80);
+      for (let i = 1; i < shifted.length; i++) {
+        const mx = (shifted[i-1].x + shifted[i].x) / 2;
+        const my2 = (shifted[i-1].y + shifted[i].y) / 2 + 80;
+        ctx.quadraticCurveTo(shifted[i-1].x, shifted[i-1].y + 80, mx, my2);
+      }
+      ctx.strokeStyle = 'rgba(100,180,255,0.08)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    function connectParticles() {
+      const dist = 120;
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < dist) {
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.strokeStyle = `rgba(226,255,93,${0.07 * (1 - d/dist)})`;
+            ctx.lineWidth = 0.5;
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animateCanvas() {
+      ctx.clearRect(0, 0, W, H);
+      drawChart();
+      particles.forEach(p => { p.update(); p.draw(); });
+      connectParticles();
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // ── TICKER ──
+    const skills = [
+      'Python', 'SQL', 'Power BI', 'Pandas', 'NumPy',
+      'scikit-learn', 'XGBoost', 'FastAPI', 'React',
+      'TypeScript', 'Next.js', 'Supabase', 'Recharts',
+      'SQLite', 'DAX', 'Power Query', 'Git', 'Jupyter'
+    ];
+    const track = document.getElementById('tickerTrack');
+    const doubled = [...skills, ...skills];
+    track.innerHTML = doubled.map((s, i) =>
+      `<span class="ticker-item">${s}<span class="sep">◆</span></span>`
+    ).join('');
+
+    // ── TYPEWRITER ──
+    const lines = [
+      'Python · SQL · Power BI',
+      'FastAPI · React · Next.js',
+      'Dashboards que cuentan historias.',
+      'Modelos que bajan a producto.',
+      'Datos, APIs e interfaces en un mismo flujo.',
+    ];
+    let li = 0, ci = 0, deleting = false;
+    const typed = document.querySelector('.typed');
+
+    function type() {
+      const line = lines[li];
+      if (!deleting) {
+        typed.textContent = line.slice(0, ++ci);
+        if (ci === line.length) {
+          deleting = true;
+          setTimeout(type, 2200);
+          return;
+        }
+        setTimeout(type, 55);
+      } else {
+        typed.textContent = line.slice(0, --ci);
+        if (ci === 0) {
+          deleting = false;
+          li = (li + 1) % lines.length;
+          setTimeout(type, 400);
+          return;
+        }
+        setTimeout(type, 28);
+      }
+    }
+    setTimeout(type, 1800);
+
+    // ── SCROLL REVEAL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    reveals.forEach(el => revealObs.observe(el));
+
+    // ── SKILL BAR ANIMATION ──
+    const bars = document.querySelectorAll('.skill-bar');
+    const barObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('animated');
+          barObs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.5 });
+    bars.forEach(b => barObs.observe(b));
+
+    // ── STAT COUNTER ──
+    const counters = document.querySelectorAll('.stat-number[data-count]');
+    const counterObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const el = e.target;
+          const target = parseInt(el.dataset.count);
+          let current = 0;
+          const step = target / 40;
+          const interval = setInterval(() => {
+            current += step;
+            if (current >= target) {
+              el.textContent = target + '+';
+              clearInterval(interval);
+            } else {
+              el.textContent = Math.floor(current);
+            }
+          }, 30);
+          counterObs.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => counterObs.observe(c));
+  </script>
+</body>
+</html>
