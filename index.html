@@ -182,6 +182,197 @@
       opacity: 0;
       animation: fadeUp 0.9s 1s forwards;
     }
+    .hero-console {
+      position: absolute;
+      right: clamp(48px, 8vw, 160px);
+      top: 52%;
+      width: clamp(360px, 30vw, 520px);
+      transform: translateY(-50%);
+      z-index: 1;
+      border: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(12,21,36,0.82), rgba(5,10,18,0.94));
+      box-shadow: 0 24px 80px rgba(0,0,0,0.28);
+      opacity: 0;
+      animation: fadeConsole 0.9s 1.15s forwards;
+    }
+    .console-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--text-mid);
+    }
+    .console-dots {
+      display: flex;
+      gap: 6px;
+    }
+    .console-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--text-muted);
+    }
+    .console-dots span:first-child { background: var(--accent); }
+    .console-body {
+      padding: 22px;
+    }
+    .console-kpis {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 22px;
+    }
+    .console-kpi {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      padding: 14px 12px;
+      min-height: 82px;
+      transition: border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .console-kpi.is-active {
+      border-color: var(--border-accent);
+      background: var(--accent-dim);
+      transform: translateY(-2px);
+    }
+    .console-kpi strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 28px;
+      line-height: 1;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+    .console-kpi span {
+      display: block;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.5;
+      color: var(--text-mid);
+      text-transform: uppercase;
+    }
+    .console-chart {
+      position: relative;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.025);
+      overflow: hidden;
+      margin-bottom: 18px;
+      padding: 14px;
+    }
+    .console-chart-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .console-chart-label {
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+    .console-chart-value {
+      font-family: var(--mono);
+      font-size: 11px;
+      color: var(--accent);
+    }
+    .console-bars {
+      display: grid;
+      gap: 9px;
+      margin-bottom: 12px;
+    }
+    .console-bar {
+      display: grid;
+      grid-template-columns: 72px 1fr 34px;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-mid);
+    }
+    .console-bar-track {
+      height: 6px;
+      background: rgba(255,255,255,0.06);
+      overflow: hidden;
+    }
+    .console-bar-fill {
+      display: block;
+      width: var(--bar-value);
+      height: 100%;
+      background: var(--accent);
+      box-shadow: 0 0 12px rgba(226,255,93,0.35);
+      transition: width 0.35s ease;
+    }
+    .console-trend {
+      width: 100%;
+      height: 48px;
+      display: block;
+      border-top: 1px solid var(--border);
+      padding-top: 8px;
+    }
+    .console-trend polyline {
+      fill: none;
+      stroke: var(--accent);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      filter: drop-shadow(0 0 5px rgba(226,255,93,0.3));
+      transition: points 0.35s ease;
+    }
+    .console-trend circle {
+      fill: var(--accent);
+      transition: cx 0.35s ease, cy 0.35s ease;
+    }
+    .console-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+    .console-tags button {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.04);
+      padding: 6px 9px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .console-tags button:hover,
+    .console-tags button:focus-visible,
+    .console-tags button.is-active {
+      color: var(--bg);
+      border-color: var(--accent);
+      background: var(--accent);
+      outline: none;
+      transform: translateY(-1px);
+    }
+    .console-code {
+      margin: 0;
+      border-left: 2px solid var(--accent);
+      background: rgba(0,0,0,0.18);
+      padding: 14px 16px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.7;
+      color: var(--text-mid);
+    }
+    .console-code span { color: var(--accent); }
+    .console-status {
+      margin-top: 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      line-height: 1.6;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+    }
+    .console-status span { color: var(--accent); }
     .btn-primary {
       font-family: var(--mono);
       font-size: 12px;
@@ -598,6 +789,14 @@
       from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
     }
+    @keyframes fadeConsole {
+      from { opacity: 0; transform: translateY(-45%) translateX(24px); }
+      to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+    }
+    @keyframes chartPulse {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0; }
@@ -629,6 +828,7 @@
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
       #hero { padding: 0 24px; }
+      .hero-console { display: none; }
       section { padding: 80px 24px; }
       #about { grid-template-columns: 1fr; gap: 48px; }
       .skills-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -676,6 +876,70 @@
       <a class="btn-primary" href="#projects">Ver proyectos</a>
       <a class="btn-secondary" href="#contact">Hablemos</a>
     </div>
+    <aside class="hero-console" aria-label="Resumen Data Product">
+      <div class="console-header">
+        <span>data_product.console</span>
+        <div class="console-dots" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="console-body">
+        <div class="console-kpis">
+          <div class="console-kpi is-active" data-console-kpi>
+            <strong>8+</strong>
+            <span>proyectos</span>
+          </div>
+          <div class="console-kpi" data-console-kpi>
+            <strong>2</strong>
+            <span>perfiles</span>
+          </div>
+          <div class="console-kpi" data-console-kpi>
+            <strong>AR</strong>
+            <span>Mendoza</span>
+          </div>
+        </div>
+        <div class="console-chart" data-console-chart>
+          <div class="console-chart-top">
+            <span class="console-chart-label" data-chart-label>Modelo / análisis</span>
+            <span class="console-chart-value" data-chart-value>86% readiness</span>
+          </div>
+          <div class="console-bars">
+            <div class="console-bar">
+              <span data-bar-label="0">clean</span>
+              <div class="console-bar-track"><span class="console-bar-fill" data-bar-fill="0" style="--bar-value: 82%"></span></div>
+              <span data-bar-value="0">82</span>
+            </div>
+            <div class="console-bar">
+              <span data-bar-label="1">model</span>
+              <div class="console-bar-track"><span class="console-bar-fill" data-bar-fill="1" style="--bar-value: 88%"></span></div>
+              <span data-bar-value="1">88</span>
+            </div>
+            <div class="console-bar">
+              <span data-bar-label="2">deploy</span>
+              <div class="console-bar-track"><span class="console-bar-fill" data-bar-fill="2" style="--bar-value: 74%"></span></div>
+              <span data-bar-value="2">74</span>
+            </div>
+          </div>
+          <svg class="console-trend" viewBox="0 0 260 48" preserveAspectRatio="none" aria-hidden="true">
+            <polyline data-trend-line points="0,38 52,30 104,34 156,18 208,22 260,10"></polyline>
+            <circle data-trend-dot cx="260" cy="10" r="3"></circle>
+          </svg>
+        </div>
+        <div class="console-tags">
+          <button type="button" class="is-active" data-console-mode="python">Python</button>
+          <button type="button" data-console-mode="sql">SQL</button>
+          <button type="button" data-console-mode="bi">Power BI</button>
+          <button type="button" data-console-mode="api">FastAPI</button>
+          <button type="button" data-console-mode="react">React</button>
+          <button type="button" data-console-mode="next">Next.js</button>
+        </div>
+        <pre class="console-code"><code>insight.status = <span data-console-status>"actionable"</span>
+stack.mode = <span data-console-stack>"data + product"</span></code></pre>
+        <div class="console-status">Focus: <span data-console-focus>modelado predictivo</span></div>
+      </div>
+    </aside>
     <div class="hero-scroll">
       <div class="scroll-line"></div>
       <span>Scroll</span>
@@ -1123,6 +1387,132 @@
       }
     }
     setTimeout(type, 1800);
+
+    // ── HERO CONSOLE INTERACTION ──
+    const consoleModes = {
+      python: {
+        kpis: [['8+', 'proyectos'], ['ML', 'modelos'], ['EDA', 'notebooks']],
+        status: 'actionable',
+        stack: 'python + analytics',
+        focus: 'modelado predictivo',
+        chart: {
+          label: 'Modelo / análisis',
+          value: '86% readiness',
+          bars: [['clean', 82], ['model', 88], ['deploy', 74]],
+          trend: '0,38 52,30 104,34 156,18 208,22 260,10'
+        }
+      },
+      sql: {
+        kpis: [['SQL', 'queries'], ['BI', 'datasets'], ['KPI', 'negocio']],
+        status: 'structured',
+        stack: 'sql + decisions',
+        focus: 'datos listos para analizar',
+        chart: {
+          label: 'Pipeline SQL',
+          value: '92% consistency',
+          bars: [['joins', 90], ['quality', 84], ['kpis', 92]],
+          trend: '0,34 52,32 104,24 156,26 208,15 260,12'
+        }
+      },
+      bi: {
+        kpis: [['DAX', 'medidas'], ['BI', 'reportes'], ['UX', 'lectura']],
+        status: 'visible',
+        stack: 'power bi + storytelling',
+        focus: 'dashboards accionables',
+        chart: {
+          label: 'Dashboard BI',
+          value: '79% clarity',
+          bars: [['dax', 78], ['visual', 86], ['story', 73]],
+          trend: '0,40 52,22 104,30 156,20 208,26 260,16'
+        }
+      },
+      api: {
+        kpis: [['API', 'REST'], ['TTL', 'cache'], ['JSON', 'ready']],
+        status: 'served',
+        stack: 'fastapi + data services',
+        focus: 'datos disponibles por API',
+        chart: {
+          label: 'API health',
+          value: '120ms avg',
+          bars: [['cache', 88], ['routes', 82], ['docs', 76]],
+          trend: '0,26 52,28 104,18 156,24 208,14 260,18'
+        }
+      },
+      react: {
+        kpis: [['UI', 'estado'], ['UX', 'flujo'], ['TS', 'tipos']],
+        status: 'interactive',
+        stack: 'react + product ui',
+        focus: 'interfaces para explorar datos',
+        chart: {
+          label: 'UI interaction',
+          value: '94% usable',
+          bars: [['state', 84], ['views', 91], ['flows', 78]],
+          trend: '0,42 52,35 104,20 156,30 208,15 260,12'
+        }
+      },
+      next: {
+        kpis: [['SSR', 'app'], ['DB', 'supabase'], ['SEO', 'pages']],
+        status: 'deployed',
+        stack: 'next.js + fullstack',
+        focus: 'productos completos',
+        chart: {
+          label: 'Fullstack app',
+          value: 'ready to ship',
+          bars: [['pages', 82], ['auth', 76], ['data', 88]],
+          trend: '0,36 52,20 104,24 156,18 208,12 260,14'
+        }
+      }
+    };
+
+    const consoleButtons = document.querySelectorAll('[data-console-mode]');
+    const consoleKpis = document.querySelectorAll('[data-console-kpi]');
+    const consoleStatus = document.querySelector('[data-console-status]');
+    const consoleStack = document.querySelector('[data-console-stack]');
+    const consoleFocus = document.querySelector('[data-console-focus]');
+    const chartLabel = document.querySelector('[data-chart-label]');
+    const chartValue = document.querySelector('[data-chart-value]');
+    const barLabels = document.querySelectorAll('[data-bar-label]');
+    const barFills = document.querySelectorAll('[data-bar-fill]');
+    const barValues = document.querySelectorAll('[data-bar-value]');
+    const trendLine = document.querySelector('[data-trend-line]');
+    const trendDot = document.querySelector('[data-trend-dot]');
+
+    function setConsoleMode(mode) {
+      const data = consoleModes[mode];
+      if (!data) return;
+
+      consoleButtons.forEach(button => {
+        button.classList.toggle('is-active', button.dataset.consoleMode === mode);
+      });
+
+      consoleKpis.forEach((kpi, index) => {
+        const [value, label] = data.kpis[index];
+        kpi.classList.toggle('is-active', index === 0);
+        kpi.querySelector('strong').textContent = value;
+        kpi.querySelector('span').textContent = label;
+      });
+
+      if (chartLabel) chartLabel.textContent = data.chart.label;
+      if (chartValue) chartValue.textContent = data.chart.value;
+      data.chart.bars.forEach(([label, value], index) => {
+        if (barLabels[index]) barLabels[index].textContent = label;
+        if (barFills[index]) barFills[index].style.setProperty('--bar-value', `${value}%`);
+        if (barValues[index]) barValues[index].textContent = value;
+      });
+      if (trendLine) trendLine.setAttribute('points', data.chart.trend);
+      if (trendDot) {
+        const lastPoint = data.chart.trend.trim().split(' ').at(-1).split(',');
+        trendDot.setAttribute('cx', lastPoint[0]);
+        trendDot.setAttribute('cy', lastPoint[1]);
+      }
+      if (consoleStatus) consoleStatus.textContent = `"${data.status}"`;
+      if (consoleStack) consoleStack.textContent = `"${data.stack}"`;
+      if (consoleFocus) consoleFocus.textContent = data.focus;
+    }
+
+    consoleButtons.forEach(button => {
+      button.addEventListener('click', () => setConsoleMode(button.dataset.consoleMode));
+    });
 
     // ── SCROLL REVEAL ──
     const reveals = document.querySelectorAll('.reveal');
