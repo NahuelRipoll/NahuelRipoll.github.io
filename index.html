@@ -827,8 +827,20 @@
     @media (max-width: 900px) {
       nav { padding: 16px 24px; }
       .nav-links { display: none; }
-      #hero { padding: 0 24px; }
-      .hero-console { display: none; }
+      #hero {
+        min-height: auto;
+        padding: 128px 24px 96px;
+        justify-content: flex-start;
+      }
+      .hero-console {
+        position: relative;
+        right: auto;
+        top: auto;
+        width: min(100%, 520px);
+        margin-top: 36px;
+        transform: none;
+        animation: fadeUp 0.9s 1.15s forwards;
+      }
       section { padding: 80px 24px; }
       #about { grid-template-columns: 1fr; gap: 48px; }
       .skills-grid { grid-template-columns: 1fr; gap: 48px; }
@@ -844,6 +856,24 @@
       }
       footer { padding: 24px; flex-direction: column; gap: 12px; text-align: center; }
       .hero-scroll { left: 24px; }
+    }
+
+    @media (max-width: 520px) {
+      #hero { padding: 112px 24px 80px; }
+      .hero-name {
+        font-size: clamp(64px, 18vw, 78px);
+        line-height: 0.92;
+      }
+      .hero-subtitle { margin-top: 28px; }
+      .hero-actions {
+        margin-top: 36px;
+        flex-wrap: wrap;
+      }
+      .hero-console { margin-top: 44px; }
+      .console-body { padding: 18px; }
+      .console-kpis { grid-template-columns: 1fr; }
+      .console-kpi { min-height: auto; }
+      .console-bar { grid-template-columns: 60px 1fr 28px; }
     }
   </style>
 </head>
