@@ -398,6 +398,34 @@
       transition: color 0.2s, border-color 0.2s;
     }
     .btn-secondary:hover { color: var(--text); border-color: var(--text-mid); }
+    .cv-group {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-cv {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,0.03);
+      padding: 13px 18px;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
+    }
+    .btn-cv::after { content: '↓'; color: var(--accent); font-size: 12px; }
+    .btn-cv:hover, .btn-cv:focus-visible {
+      color: var(--text);
+      border-color: var(--border-accent);
+      background: var(--accent-dim);
+      transform: translateY(-1px);
+      outline: none;
+    }
     .hero-scroll {
       position: absolute;
       bottom: 36px;
@@ -905,6 +933,10 @@
     <div class="hero-actions">
       <a class="btn-primary" href="#projects">Ver proyectos</a>
       <a class="btn-secondary" href="#contact">Hablemos</a>
+      <div class="cv-group">
+        <a class="btn-cv" href="cv-data-analyst.pdf" download>CV Data Analyst</a>
+        <a class="btn-cv" href="cv-fullstack.pdf" download>CV Fullstack</a>
+      </div>
     </div>
     <aside class="hero-console" aria-label="Resumen Data Product">
       <div class="console-header">
